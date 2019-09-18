@@ -1,2 +1,35 @@
 ---
-# tasks file for ansible-role-pigpio
+- name: Check if Pigpio is already installed
+  command: which pigpiod
+  failed_when: false
+  changed_when: false
+  register: pigpiod_is_installed_result
+
+- name: Download and Unpack Pigpio
+  unarchive:
+    remote_src: yes
+    src: https://github.com/joan2937/pigpio/archive/{{ pigpio_version }}.zip
+    mode: 0775
+    dest: /tmp
+  when: pigpiod_is_installed_result.rc == 1
+
+- name: Build Pigpio
+  make:
+    chdir: /tmp/pigpio-{{ pigpio_version | regex_replace('^V') }}
+    params:
+      NUM_THREADS: "{{ threads_for_make }}"
+  when: pigpiod_is_installed_result.rc == 1
+
+- name: Install Pigpio
+  make:
+    chdir: /tmp/pigpio-{{ pigpio_version | regex_replace('^V') }}
+    target: install
+  become: yes
+  when: pigpiod_is_installed_result.rc == 1
+
+- name: Start pigpio daemon
+  service:
+    name: pigpiod
+    state: started
+    enabled: true
+  when: pigpiod_is_installed_result.rc == 1

@@ -1,2 +1,5 @@
 ---
-# defaults file for ansible-role-pigpio
+# Check versions in https://github.com/joan2937/pigpio/releases
+pigpio_version: master
+
+threads_for_make: "{{ ansible_facts['processor_vcpus'] }}"
