@@ -3,6 +3,8 @@ Pigpio
 
 An Ansible Role that installs any version (provided by param) of [pigpio library](http://abyz.me.uk/rpi/pigpio/) on a Raspberry Pi.
 
+Find the role in [Ansible Galaxy](https://galaxy.ansible.com/whoan/pigpio).
+
 Requirements
 ------------
 
