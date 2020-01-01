@@ -41,4 +41,4 @@ Including an example of how to use your role (for instance, with variables passe
 License
 -------
 
-[MIT](http://mths.be/mit)
+[MIT](https://github.com/whoan/ansible-role-pigpio/blob/master/LICENSE)
